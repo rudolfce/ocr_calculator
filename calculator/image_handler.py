@@ -17,4 +17,4 @@ class ImageHandler:
 
     def iter_images(self):
         for f in get_files(self.input_folder, self.supported_extensions):
-            yield Image.open(f)
+            yield f, Image.open(f)

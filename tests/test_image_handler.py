@@ -16,7 +16,6 @@ class TestImageHandler(TestCase):
         files = ['file1.jpg', 'file1.png']
         mocked_os.return_value = files
 
-        for file_name, image in zip(files, self.image_handler.iter_images()):
-            image_path = os.path.join(self.input_folder, file_name)
+        for image_path, image in self.image_handler.iter_images():
             mocked_image.open.assert_called_with(image_path)
             assert image is mocked_image.open.return_value
