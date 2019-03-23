@@ -1,0 +1,7 @@
+__pycache__/
+env/
+*.py[co]
+settings.py
+*.png
+*.jpg
+*.pdf
