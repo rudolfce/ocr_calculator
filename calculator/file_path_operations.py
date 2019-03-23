@@ -7,3 +7,4 @@ def get_files(path, extensions):
             if f.lower().endswith(extension.lower()):
                 file_path = os.path.join(path, f)
                 yield file_path
+                break
