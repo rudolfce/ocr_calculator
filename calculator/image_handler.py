@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 
 from calculator.file_path_operations import get_files
@@ -17,4 +18,6 @@ class ImageHandler:
 
     def iter_images(self):
         for f in get_files(self.input_folder, self.supported_extensions):
-            yield Image.open(f)
+            _, file_name = os.path.split(f)
+            base_name, _ = os.path.splitext(file_name)
+            yield base_name, Image.open(f)
