@@ -49,7 +49,36 @@ Pytest pode ser utilizado para  realizar os testes unitários.
 (env) $ pytest
 ```
 
+## Uso do script exemplo ##
+
+Um script exemplo foi fornecido com o nome ocr_calculator. Ele recebe suas configurações
+do arquivo settings.py.
+
+O arquivo settings.py deve ser similar ao settings_example.py fornecido. Este arquivo
+pode ser copiado para obter o comportamento padrão (não terá controle de versão).
+Alternativamente, caso não se deseje realizar nenhuma alteração no comportamento padrão da
+ferramenta, pode ser utilizado um link simbólico para settings_example.py
+
+```bash
+# Opção 1: Criando cópia de settings_example.py
+$ cp settings_example.py settings.py
+
+# Opção 2: Criando link simbólico
+$ ln -s settings_example.py settings.py
+```
+
+Uma vez criado o settings.py, a ferramenta pode ser utilizada normalmente fornecendo uma
+pasta input e outra de output.
+
+```bash
+(env) $ python ocr_calculator.py input_folder output_folder
+```
+
 ## Uso da biblioteca ##
+
+A criação do arquivo settings.py é específica para o script ocr_calculator. A biblioteca
+por si só não depende desse arquivo, e sua criação para outros scripts fica a critério
+do desenvolvedor.
 
 A classe base da biblioteca é o Calculator. Ele deve ser instanciado
 com uma expressão regular para interpretar o input. Mais informações
