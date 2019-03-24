@@ -38,7 +38,7 @@ class TestCalculator(TestCase):
 
         for file_name, _ in image_handler.iter_images():
             output_path = os.path.join(output_folder, file_name + '.txt')
-            mocked_open.assert_has_calls([call(output_path)])
+            mocked_open.assert_has_calls([call(output_path, 'w')])
             contents = mocked_ocr.return_value
             mocked_result.assert_has_calls([call(contents, self.input_regex, '.',
                                                  self.integer_group, self.decimal_group)])

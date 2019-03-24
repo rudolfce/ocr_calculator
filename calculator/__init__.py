@@ -35,5 +35,5 @@ class Calculator:
             output_file_name = self.output_prefix + base_name + self.output_extension
             output_path = os.path.join(output_folder, output_file_name)
 
-            with open(output_path) as output_file:
+            with open(output_path, 'w') as output_file:
                 output_file.write(output_text)

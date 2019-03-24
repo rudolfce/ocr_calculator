@@ -4,6 +4,9 @@ import re
 class Result:
     def __init__(self, input_data, regex, thousands='.', integer_group=0,
                  decimal_group=-1):
+        if isinstance(input_data, str):
+            input_data = [input_data]
+
         data = []
         for string in input_data:
             matches = re.finditer(regex, string)
