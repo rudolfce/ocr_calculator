@@ -1,4 +1,5 @@
 import os
+from babel.numbers import format_currency
 
 from calculator.image_handler import ImageHandler
 from calculator.ocr import get_image_contents
@@ -28,7 +29,9 @@ class Calculator:
             data_sum = result.get_sum()
 
             if data:
-                output_text = '\n'.join(data + [data_sum])
+                output_data = [format_currency(c, 'R$', locale=self._output_locale) for
+                               c in data + [data_sum]]
+                output_text = '\n'.join(output_data)
             else:
                 output_text = empty_message
 
