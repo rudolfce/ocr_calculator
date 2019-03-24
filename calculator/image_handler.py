@@ -31,8 +31,8 @@ class ImageHandler:
 
         PDF objects will be parsed by stacking all pages vertically into a temporary
         file.'''
-        for file_name in get_files(self.input_folder, self.supported_extensions):
-            _, file_name = os.path.split(file_name)
+        for input_file in get_files(self.input_folder, self.supported_extensions):
+            _, file_name = os.path.split(input_file)
             base_name, ext = os.path.splitext(file_name)
 
             if ext.lower() == '.pdf':
@@ -41,7 +41,7 @@ class ImageHandler:
                 temp_path = os.path.join(self.temp_folder_path, base_name + '.png')
 
                 # Pasting all pages together into one big image
-                pages = [p for p in convert_from_path(file_name)]
+                pages = [p for p in convert_from_path(input_file)]
                 # Getting resulting dimension
                 widths, heights = zip(*(i.size for i in pages))
                 width = max(widths)
@@ -57,6 +57,6 @@ class ImageHandler:
                 resulting_image.save(temp_path)
                 image = Image.open(temp_path)
             else:
-                image = Image.open(file_name)
+                image = Image.open(input_file)
 
             yield base_name, image
