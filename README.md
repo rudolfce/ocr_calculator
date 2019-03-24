@@ -5,10 +5,28 @@ monetários a partir de arquivos de imagem.
 A ferramenta utiliza Tesseract, do Google, como seu motor central,
 e pytesseract como interface.
 
-Pytesseract realiza uma chamada de sistema para executar Tesseract
-para cada utilização sobre qualquer imagem. Por esse motivo, outras
+## Algoritmos e bibliotecas ##
+
+O motor OCR utilizado para a calculadora é o Tesseract-OCR, mantido pela Google.
+Trata-se de uma ferramenta em pronunciada ascenção, com uma comunidade bastante
+ativa e atualizações constantes, o que garante maior confiabilidade na acurácia
+e boa manutenção dos algoritmos nela implementados.
+
+Por simplicidade, foi utilizado como interface o pytesseract. Esse módulo
+realiza uma chamada de sistema para executar Tesseract
+para cada imagem interpretada. Por esse motivo, outras
 estratégias podem ser desejáveis em versões futuras para reduzir o
-overhead introduzido por esse método.
+overhead introduzido por esse método, caso o tempo de execução se torne um problema
+para número muito grande de pequenos arquivos.
+
+A entrada de arquivos pdf foi tratada usando pdf2image, uma biblioteca que utiliza
+poppler em seu núcleo. Outras bibliotecas, como wand, são recomendadas pela comunidade,
+mas seu uso com ImageMagick pode gerar contratempos em alguns sistemas (atualizações
+de segurança do final de 2018).
+
+Para formatar a saída foi utilizado Babel, que é uma biblioteca que simplifica o trabalho
+de formatação numérica com locales diferentes do inglês americano.
+
 
 ## Instalação e uso ##
 
@@ -25,9 +43,9 @@ $ git clone https://github.com/rudolfce/ocr_calculator
 
 ### Requisitos ###
 
-Esse repositório requer Tesseract devidamente instalado e configurado
-para funcionar corretamente. A biblioteca foi desenvolvida para
-Python3. As dependências de bibliotecas Python
+Esse repositório foi desenvolvido em Python3, e seu funcionamento com versões anteriores
+a Python 3.7 não foi testado. Ele requer Tesseract devidamente instalado e
+configurado para funcionar corretamente. As dependências de bibliotecas Python
 foram mantidas a um mínimo, e podem ser encontradas no arquivo
 requirements.txt.
 
@@ -39,6 +57,15 @@ $ source env/bin/activate
 
 # Instalação das bibliotecas Python necessárias
 (env) $ pip install -r requirements.txt
+```
+
+pdf2image depende de pacotes do poppler instalados na máquina. Algumas distribuições
+Linux, como Ubuntu e Arch Linux, a trazem por padrão, mas pode ser necessário instalar
+alguma delas se o script retornar algum erro. Nesse caso, no ubuntu, utilize o seguinte
+comando:
+
+```bash
+$ sudo apt install poppler-utils
 ```
 
 ### Requisitos opcionais ###
@@ -75,6 +102,9 @@ pasta input e outra de output.
 ```
 
 ## Uso da biblioteca ##
+
+** Essa sessão é destinada para o uso da biblioteca. O uso do script não depende do
+conhecimento de detalhes do pacote desenvolvido **
 
 A criação do arquivo settings.py é específica para o script ocr_calculator. A biblioteca
 por si só não depende desse arquivo, e sua criação para outros scripts fica a critério
