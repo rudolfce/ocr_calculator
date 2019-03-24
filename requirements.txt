@@ -1,2 +1,3 @@
 Babel
 pytesseract
+pdf2image

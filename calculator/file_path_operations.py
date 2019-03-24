@@ -13,3 +13,9 @@ def get_files(path, extensions):
                 file_path = os.path.join(path, f)
                 yield file_path
                 break
+
+
+def check_and_create(folder_path):
+    '''Given a folder path, checks if exists. If not, creates it'''
+    if not os.path.exists(folder_path):
+        os.mkdir(folder_path)
