@@ -1,3 +1,5 @@
+'''Script that summarizes the ocr calculator. Requires a propperly configured
+settings.py file. See settings_example.py for more information'''
 import sys
 
 from calculator import Calculator

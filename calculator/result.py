@@ -1,7 +1,15 @@
+'''Contains the Result class'''
 import re
 
 
 class Result:
+    '''This class takes input text data and a regex to parse results.
+
+    Optional parameters:
+    - thousands: should represent the thousands separator. Thousands separator will be
+      removed from input before proper parsing
+    - integer_group: The regex group that contains the integer portion of the input
+    - decimal_group: The regex group that contains the decimal portion of the input'''
     def __init__(self, input_data, regex, thousands='.', integer_group=0,
                  decimal_group=-1):
         if isinstance(input_data, str):
@@ -18,9 +26,11 @@ class Result:
         self._data = data
 
     def get_data(self):
+        '''Returns data parsed as a list'''
         return self._data
 
     def get_sum(self):
+        '''Returns the sum of data found'''
         return sum(self._data)
 
     def __repr__(self):
