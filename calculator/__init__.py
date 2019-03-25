@@ -1,3 +1,9 @@
+# OCR Calculator
+# Copyright (C) 2019 Rudolf Copi Eckelberg
+#
+# This module is part of OCR Calculator and is under the MIT License:
+# http://www.opensource.org/licenses/mit-license.php
+
 '''Package that contains routines to parse images with pytesseract'''
 import os
 from babel.numbers import format_currency

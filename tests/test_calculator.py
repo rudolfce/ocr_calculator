@@ -1,3 +1,9 @@
+# OCR Calculator
+# Copyright (C) 2019 Rudolf Copi Eckelberg
+#
+# This module is part of OCR Calculator and is under the MIT License:
+# http://www.opensource.org/licenses/mit-license.php
+
 import os
 from unittest import TestCase
 from unittest.mock import patch, call
