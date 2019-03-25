@@ -9,6 +9,23 @@ from calculator.file_path_operations import get_files, check_and_create
 
 logger = logging.getLogger('__main__.' + __name__)
 
+def stack_pages(pages):
+    '''Given a pack (list) of PIL images, stacks them vertically'''
+    # Getting resulting dimension
+    widths, heights = zip(*(i.size for i in pages))
+    width = max(widths)
+    height = sum(heights)
+    resulting_image = Image.new('RGB', (width, height))
+
+    # Pasting images together
+    offset = 0
+    for page in pages:
+        resulting_image.paste(page, (0, offset))
+        offset += page.size[1]
+
+    return resulting_image
+
+
 class ImageHandler:
     '''This class is designed to allow itteration inside an input folder to retrieve
     images. Instantiation only requires an input_folder.
@@ -48,17 +65,8 @@ class ImageHandler:
 
                     # Pasting all pages together into one big image
                     pages = [p for p in convert_from_path(input_file)]
-                    # Getting resulting dimension
-                    widths, heights = zip(*(i.size for i in pages))
-                    width = max(widths)
-                    height = sum(heights)
-                    resulting_image = Image.new('RGB', (width, height))
 
-                    # Pasting images together
-                    offset = 0
-                    for page in pages:
-                        resulting_image.paste(page, (0, offset))
-                        offset += page.size[1]
+                    resulting_image = stack_pages(pages)
 
                     resulting_image.save(temp_path)
                     image = Image.open(temp_path)
