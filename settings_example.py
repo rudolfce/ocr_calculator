@@ -1,3 +1,9 @@
+# OCR Calculator
+# Copyright (C) 2019 Rudolf Copi Eckelberg
+#
+# This module is part of OCR Calculator and is under the MIT License:
+# http://www.opensource.org/licenses/mit-license.php
+
 '''Example of a valid settings.py file and default script behavior.
 Copy or link this file as settings.py to start using the ocr_calculator script.'''
 
