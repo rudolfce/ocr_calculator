@@ -5,3 +5,5 @@ settings.py
 *.png
 *.jpg
 *.pdf
+*.log.*
+*.log
