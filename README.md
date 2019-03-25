@@ -45,7 +45,15 @@ $ git clone https://github.com/rudolfce/ocr_calculator
 
 Esse repositório foi desenvolvido em Python3, e seu funcionamento com versões anteriores
 a Python 3.7 não foi testado. Ele requer Tesseract devidamente instalado e
-configurado para funcionar corretamente. As dependências de bibliotecas Python
+configurado para funcionar corretamente. Tesseract deve ser instalado a partir do método
+apropriado para a distribuição em uso. Para Ubuntu ou Debian:
+
+```bash
+# Instalação do Tesseract e pacote de idiomas para português
+$ sudo apt-get install tesseract-ocr tesseract-ocr-por
+```
+
+As dependências de bibliotecas Python
 foram mantidas a um mínimo, e podem ser encontradas no arquivo
 requirements.txt.
 
@@ -65,7 +73,7 @@ alguma delas se o script retornar algum erro. Nesse caso, no ubuntu, utilize o s
 comando:
 
 ```bash
-$ sudo apt install poppler-utils
+$ sudo apt-get install poppler-utils
 ```
 
 ### Requisitos opcionais ###
@@ -98,8 +106,11 @@ Uma vez criado o settings.py, a ferramenta pode ser utilizada normalmente fornec
 pasta input e outra de output.
 
 ```bash
+# Substitua input_folder e output_folder pelos diretórios de entrada e saída
 (env) $ python ocr_calculator.py input_folder output_folder
 ```
+
+Certifique-se de que o diretório de saída existe antes de executar o script.
 
 ## Uso da biblioteca ##
 
