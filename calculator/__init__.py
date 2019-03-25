@@ -1,11 +1,14 @@
 '''Package that contains routines to parse images with pytesseract'''
 import os
 from babel.numbers import format_currency
+import logging
 
 from calculator.image_handler import ImageHandler
 from calculator.ocr import get_image_contents
 from calculator.result import Result
 
+
+logger = logging.getLogger('__main__.' + __name__)
 
 class Calculator:
     '''Base class of the OCR calculator. Scripts that use this package should first
@@ -34,7 +37,8 @@ class Calculator:
         self._decimal_group = decimal_group
         self._output_locale = output_locale
 
-    def parse_folder(self, input_folder, output_folder, empty_message='Empty'):
+    def parse_folder(self, input_folder, output_folder, empty_message='Empty',
+                     error_message="Error"):
         image_handler = ImageHandler(input_folder)
         '''Method to parse an input folder of images and output text files in output.
 
@@ -42,22 +46,35 @@ class Calculator:
         - empty_message: The message to be printed in the output file if no matches are
           found in the input'''
 
+        errors = 0
         for base_name, image in image_handler.iter_images():
-            contents = get_image_contents(image)
-            result = Result(contents, self._input_regex, self._thousands,
-                            self._integer_group, self._decimal_group)
-            data = result.get_data()
-            data_sum = result.get_sum()
-
-            if data:
-                output_data = [format_currency(c, 'R$', locale=self._output_locale) for
-                               c in data + [data_sum]]
-                output_text = '\n'.join(output_data)
+            if image is None:
+                output_text = error_message
+                errors += 1
             else:
-                output_text = empty_message
+                logger.debug("Parsing {}".format(base_name))
+                contents = get_image_contents(image)
+                result = Result(contents, self._input_regex, self._thousands,
+                                self._integer_group, self._decimal_group)
+                data = result.get_data()
+                data_sum = result.get_sum()
+
+                if data:
+                    output_data = [format_currency(c, 'R$', locale=self._output_locale)
+                                   for c in data + [data_sum]]
+                    output_text = '\n'.join(output_data)
+                else:
+                    logger.debug("Got empty file")
+                    output_text = empty_message
 
             output_file_name = self.output_prefix + base_name + self.output_extension
             output_path = os.path.join(output_folder, output_file_name)
 
+            logger.debug("Writing to output")
             with open(output_path, 'w') as output_file:
                 output_file.write(output_text)
+
+        logger.info("Execution ended")
+        if errors:
+            print(("Got {} errors during execution. Check log file for more"
+                   " information").format(errors))
