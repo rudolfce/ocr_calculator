@@ -37,6 +37,21 @@ class Calculator:
         self._decimal_group = decimal_group
         self._output_locale = output_locale
 
+    def format_result(self, result, empty_message):
+        '''Formats result and returns an output_text'''
+        data = result.get_data()
+        data_sum = result.get_sum()
+
+        if data:
+            output_data = [format_currency(c, 'R$', locale=self._output_locale)
+                           for c in data + [data_sum]]
+            output_text = '\n'.join(output_data)
+        else:
+            logger.debug("Got empty file")
+            output_text = empty_message
+
+        return output_text
+
     def parse_folder(self, input_folder, output_folder, empty_message='Empty',
                      error_message="Error"):
         image_handler = ImageHandler(input_folder)
@@ -56,23 +71,15 @@ class Calculator:
                 contents = get_image_contents(image)
                 result = Result(contents, self._input_regex, self._thousands,
                                 self._integer_group, self._decimal_group)
-                data = result.get_data()
-                data_sum = result.get_sum()
 
-                if data:
-                    output_data = [format_currency(c, 'R$', locale=self._output_locale)
-                                   for c in data + [data_sum]]
-                    output_text = '\n'.join(output_data)
-                else:
-                    logger.debug("Got empty file")
-                    output_text = empty_message
+                output_text = self.format_result(result, empty_message)
 
             output_file_name = self.output_prefix + base_name + self.output_extension
             output_path = os.path.join(output_folder, output_file_name)
 
             logger.debug("Writing to output")
             with open(output_path, 'w') as output_file:
-                output_file.write(output_text)
+                output_file.write(output_text + '\n')
 
         logger.info("Execution ended")
         if errors:
